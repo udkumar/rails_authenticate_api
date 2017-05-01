@@ -7,16 +7,7 @@ class Api::SessionsController < Api::BaseController
   respond_to :json
   
   def create
-    build_resource
-    resource = User.find_for_database_authentication(:login=>params[:user_login][:login])
-    return invalid_login_attempt unless resource
-
-    if resource.valid_password?(params[:user_login][:password])
-      sign_in("user", resource)
-      render :json=> {:success=>true, :auth_token=>resource.authentication_token, :login=>resource.login, :email=>resource.email}
-      return
-    end
-    invalid_login_attempt
+    
   end
   
   def destroy
